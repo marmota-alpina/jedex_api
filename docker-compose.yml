@@ -1,0 +1,24 @@
+services:
+  api:
+    build: .
+    container_name: jedex_api
+    ports:
+      - "5001:8000"
+    depends_on:
+      - jedex_postgres
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://jedex_user:password@jedex_postgres/jedex_db
+
+  jedex_postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=jedex_user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=jedex_db
+    volumes:
+      - jedex_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+volumes:
+  jedex_postgres_data:
