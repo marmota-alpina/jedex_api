@@ -5,7 +5,14 @@ from fastapi.middleware.cors import CORSMiddleware
 # Create the database tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(description="Jedex API", version="1.0.0", title="Jedex API", redoc_url="/redoc", docs_url="/")
+app = FastAPI(
+    description="Jedex API",
+    version="1.0.0",
+    title="Jedex API",
+    redoc_url="/jedex/redoc",
+    docs_url="/jedex",
+    openapi_url="/jedex/openapi.json"
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,7 +20,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Authorization", "Content-Type"],
 )
-app.include_router(api_router, prefix="/api/v1")
+app.include_router(api_router, prefix="/jedex/api/v1")
 
 
 @app.get("/")
