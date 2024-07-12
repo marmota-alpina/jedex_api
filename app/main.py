@@ -5,6 +5,7 @@ from app.api.v1.api import api_router
 from app.core import config
 from app.core.database import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
+
 # Create the database tables
 Base.metadata.create_all(bind=engine)
 
@@ -28,6 +29,8 @@ app.include_router(api_router, prefix="/jedex/api/v1")
 address_service_url = config.settings.address_service_url
 
 logging.warning(f"Address service URL: {address_service_url}")
+
+
 @app.get("/")
 def read_root():
     return {"message": "Welcome to Jedex API"}
