@@ -1,13 +1,15 @@
 import requests
 
+from app.core.config import settings
 from app.schemas.distance import DistanceResponse
 
 
 class AddressService:
-
     @staticmethod
     def get_distance(origin: str, destination: str) -> DistanceResponse | None:
-        response = requests.get(f"http://0.0.0.0/geolocation/distance/from/{origin}/to/{destination}")
+        address_service_url = settings.address_service_url
+        print(f"{address_service_url}/geolocation/distance/from/{origin}/to/{destination}")
+        response = requests.get(f"{address_service_url}/geolocation/distance/from/{origin}/to/{destination}")
         if response.status_code == 200:
             data = response.json()
             return DistanceResponse(
